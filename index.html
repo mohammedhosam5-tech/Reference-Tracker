@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference Tracker - Enterprise</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<style>
+
+/* ============================================================
+   Reference TRACKER — ENTERPRISE DESIGN SYSTEM v1.0
+   ============================================================ */
+
+/* ── THEME: EXECUTIVE LIGHT (DEFAULT) ── */
+:root,
+body.theme-executive {
+  --bg: #F0F2F5;
+  --surface: #FFFFFF;
+  --surface2: #F8F9FA;
+  --surface3: #EEF2F6;
+  --border: #D0D5DD;
+  --border-light: #E4E7EC;
+  --primary: #1B4F8A;
+  --primary-dk: #123A6B;
+  --primary-lt: #EBF2FB;
+  --accent: #0F766E;
+  --text: #1D2329;
+  --text2: #344054;
+  --text3: #667085;
+  --text4: #98A2B3;
+  --ok: #027A48; --ok-bg: #ECFDF3;
+  --warn: #B54708; --warn-bg: #FFFAEB;
+  --err: #B42318; --err-bg: #FEF3F2;
+  --info: #175CD3; --info-bg: #EFF8FF;
+  --hdr-bg: #1B4F8A; --hdr-text: #FFFFFF;
+  --nav-bg: #162033; --nav-text: #A8B4C6; --nav-act: #FFFFFF; --nav-act-bg: #1B4F8A;
+  --row-alt: #F8FAFC; --row-hover: #EEF3FB; --row-sel: #D6E7FF;
+  --btn-bg: #1B4F8A; --btn-txt: #FFF;
+  --btn2-bg: #FFF; --btn2-txt: #344054; --btn2-bd: #D0D5DD;
+  --inp-bg: #FFF; --inp-bd: #D0D5DD; --inp-txt: #1D2329;
+  --modal-bg: rgba(0,0,0,.45);
+  --pill: #1B4F8A; --pill-txt: #FFF;
+  --shadow: 0 1px 3px rgba(0,0,0,.10);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.12);
+  --radius: 3px;
+  --font: 'Segoe UI', Inter, system-ui, sans-serif;
+}
+
+/* ── THEME: SLATE DARK ── */
+body.theme-slate {
+  --bg: #0F172A; --surface: #1E2840; --surface2: #1A2235; --surface3: #232E45;
+  --border: #2C3E59; --border-light: #334566;
+  --primary: #3B82F6; --primary-dk: #2563EB; --primary-lt: #1E3A5F;
+  --text: #E2E8F0; --text2: #CBD5E1; --text3: #94A3B8; --text4: #64748B;
+  --ok: #34D399; --ok-bg: #064E3B; --warn: #FCD34D; --warn-bg: #451A03;
+  --err: #F87171; --err-bg: #450A0A; --info: #60A5FA; --info-bg: #1E3A5F;
+  --hdr-bg: #0B1120; --hdr-text: #E2E8F0;
+  --nav-bg: #0B1120; --nav-text: #8496AE; --nav-act: #E2E8F0; --nav-act-bg: #1E3A5F;
+  --row-alt: #1A2235; --row-hover: #1E2D47; --row-sel: #1E3A5F;
+  --btn-bg: #3B82F6; --btn-txt: #FFF;
+  --btn2-bg: #1E2840; --btn2-txt: #CBD5E1; --btn2-bd: #2C3E59;
+  --inp-bg: #1A2235; --inp-bd: #334566; --inp-txt: #E2E8F0;
+  --modal-bg: rgba(0,0,0,.6);
+  --pill: #3B82F6; --pill-txt: #FFF;
+  --shadow: 0 1px 4px rgba(0,0,0,.3); --shadow-md: 0 4px 14px rgba(0,0,0,.35); --shadow-lg: 0 8px 28px rgba(0,0,0,.45);
+}
+
+/* ── THEME: ORACLE REDWOOD ── */
+body.theme-redwood {
+  --bg: #F5EFE8; --surface: #FFFAF5; --surface2: #F5EDE0; --surface3: #EDE3D4;
+  --border: #D4C4B0; --border-light: #E0D4C4;
+  --primary: #8B3D1F; --primary-dk: #6B2D14; --primary-lt: #FAF0E8;
+  --text: #2F241D; --text2: #4A3928; --text3: #75675B; --text4: #A09080;
+  --ok: #3A7A30; --ok-bg: #EEF7EC; --warn: #9B6A10; --warn-bg: #FEF7E0;
+  --err: #A43F2A; --err-bg: #FEF0EC; --info: #2563A0; --info-bg: #EEF4FF;
+  --hdr-bg: #8B3D1F; --hdr-text: #FFF;
+  --nav-bg: #4A2010; --nav-text: #C4A890; --nav-act: #FFF; --nav-act-bg: #8B3D1F;
+  --row-alt: #FBF5EE; --row-hover: #F5E8D8; --row-sel: #F0D8C0;
+  --btn-bg: #8B3D1F; --btn-txt: #FFF;
+  --btn2-bg: #FFF; --btn2-txt: #4A3928; --btn2-bd: #D4C4B0;
+  --inp-bg: #FFF; --inp-bd: #D4C4B0; --inp-txt: #2F241D;
+  --modal-bg: rgba(0,0,0,.4);
+  --pill: #8B3D1F; --pill-txt: #FFF;
+  --shadow: 0 1px 3px rgba(80,40,0,.12); --shadow-md: 0 4px 12px rgba(80,40,0,.10); --shadow-lg: 0 8px 24px rgba(80,40,0,.14);
+}
+
+/* ── THEME: MIDNIGHT BLUE ── */
+body.theme-midnight {
+  --bg: #08111F; --surface: #0E1B2E; --surface2: #12243C; --surface3: #182E4A;
+  --border: #1E3656; --border-light: #223C5E;
+  --primary: #5B9BD5; --primary-dk: #3A7AB8; --primary-lt: #0E2040;
+  --text: #D4E5F5; --text2: #B0CBE8; --text3: #7A9DC0; --text4: #4A6882;
+  --ok: #34D399; --ok-bg: #052E20; --warn: #FBBF24; --warn-bg: #2A1A00;
+  --err: #FB7185; --err-bg: #2A0814; --info: #7DD3FC; --info-bg: #051D3A;
+  --hdr-bg: #040D1A; --hdr-text: #D4E5F5;
+  --nav-bg: #040D1A; --nav-text: #5E82A4; --nav-act: #D4E5F5; --nav-act-bg: #0E2040;
+  --row-alt: #0C1A2E; --row-hover: #102030; --row-sel: #0E2040;
+  --btn-bg: #5B9BD5; --btn-txt: #FFF;
+  --btn2-bg: #0E1B2E; --btn2-txt: #B0CBE8; --btn2-bd: #1E3656;
+  --inp-bg: #0C1A2E; --inp-bd: #1E3656; --inp-txt: #D4E5F5;
+  --modal-bg: rgba(0,0,0,.65);
+  --pill: #5B9BD5; --pill-txt: #FFF;
+  --shadow: 0 1px 4px rgba(0,0,0,.4); --shadow-md: 0 4px 16px rgba(0,0,0,.5); --shadow-lg: 0 8px 30px rgba(0,0,0,.6);
+}
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; font-family: var(--font); font-size: 13px; color: var(--text); background: var(--bg); }
+button { cursor: pointer; font-family: var(--font); font-size: 12px; }
+input, select, textarea { font-family: var(--font); font-size: 12px; color: var(--inp-txt); background: var(--inp-bg); }
+a { color: var(--primary); text-decoration: none; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--surface2); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text4); }
+
+/* ── APP SHELL ── */
+#app-shell { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+/* ── HEADER ── */
+#app-header {
+  height: 44px; flex-shrink: 0;
+  background: var(--hdr-bg); color: var(--hdr-text);
+  display: flex; align-items: center; padding: 0 14px; gap: 10px;
+  border-bottom: 1px solid rgba(0,0,0,.2); z-index: 50;
+}
+.hdr-brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 14px; letter-spacing: .3px; }
+.hdr-mark {
+  width: 26px; height: 26px; background: rgba(255,255,255,.15); border-radius: 4px;
+  display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; letter-spacing: 0;
+}
+.hdr-divider { width: 1px; height: 18px; background: rgba(255,255,255,.18); margin: 0 4px; }
+.hdr-sub { font-size: 11px; opacity: .65; font-weight: 400; }
+.hdr-spacer { flex: 1; }
+.hdr-ctrl { display: flex; align-items: center; gap: 8px; }
+.hdr-btn {
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  color: var(--hdr-text); padding: 4px 10px; border-radius: var(--radius);
+  font-size: 11px; display: flex; align-items: center; gap: 5px; cursor: pointer;
+}
+.hdr-btn:hover { background: rgba(255,255,255,.18); }
+.hdr-btn:disabled { opacity: .4; cursor: not-allowed; }
+select.theme-select {
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  color: var(--hdr-text); padding: 3px 8px; border-radius: var(--radius);
+  font-size: 11px; cursor: pointer; outline: none;
+}
+select.theme-select option { background: #1B4F8A; color: #FFF; }
+.hdr-ver { font-size: 10px; opacity: .45; }
+
+/* ── BODY ROW ── */
+#app-body { display: flex; flex: 1; overflow: hidden; }
+
+/* ── SIDEBAR ── */
+#sidebar {
+  width: 210px; flex-shrink: 0; background: var(--nav-bg);
+  display: flex; flex-direction: column; overflow-y: auto;
+  border-right: 1px solid rgba(0,0,0,.15);
+}
+.nav-section { padding: 14px 0 4px; }
+.nav-section-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px;
+  color: var(--text4); padding: 0 12px 5px;
+  opacity: .6;
+}
+/* tab-btn elements styled as sidebar nav items */
+.tab-btn {
+  display: flex; align-items: center; gap: 9px;
+  width: 100%; padding: 8px 12px;
+  background: none; border: none; border-left: 2px solid transparent;
+  color: var(--nav-text); font-size: 12px; font-weight: 400;
+  cursor: pointer; text-align: left; transition: background .1s, color .1s;
+  white-space: nowrap;
+}
+.tab-btn:hover { background: rgba(255,255,255,.05); color: var(--nav-act); }
+.tab-btn.active { background: var(--nav-act-bg); color: var(--nav-act); border-left-color: var(--primary); font-weight: 600; }
+.tab-btn svg { opacity: .65; flex-shrink: 0; }
+.tab-btn.active svg { opacity: 1; }
+.nav-divider { height: 1px; background: rgba(255,255,255,.07); margin: 6px 12px; }
+.nav-footer { margin-top: auto; padding: 10px 12px; font-size: 10px; color: var(--text4); opacity: .5; }
+
+/* ── MAIN ── */
+#main-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+/* ── PANELS ── */
+.panel { display: none; flex-direction: column; height: 100%; overflow: hidden; }
+.panel.active { display: flex; }
+
+/* ── SECTION TOOLBAR (inside panels) ── */
+.section-header {
+  padding: 11px 16px; background: var(--surface);
+  border-bottom: 1px solid var(--border); flex-shrink: 0;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.section-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.section-spacer { flex: 1; }
+
+/* ── RECORD TOOLBAR ── */
+.record-toolbar {
+  height: 40px; background: var(--surface); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 12px; gap: 5px; flex-shrink: 0;
+}
+.spacer { flex: 1; }
+
+/* ── CONTENT SCROLL AREA ── */
+.panel-content { flex: 1; overflow: auto; }
+.panel-scroll { flex: 1; overflow: auto; padding: 16px; }
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 11px; border-radius: var(--radius); font-size: 11px; font-weight: 500;
+  cursor: pointer; border: 1px solid transparent; white-space: nowrap;
+  transition: background .1s, opacity .1s;
+}
+.btn-primary { background: var(--btn-bg); color: var(--btn-txt); border-color: var(--btn-bg); }
+.btn-primary:hover { background: var(--primary-dk); border-color: var(--primary-dk); }
+.btn-outline { background: var(--btn2-bg); color: var(--btn2-txt); border-color: var(--btn2-bd); }
+.btn-outline:hover { background: var(--surface2); }
+.btn-danger { background: var(--err-bg); color: var(--err); border-color: var(--err); }
+.btn-danger:hover { background: var(--err); color: #FFF; }
+.btn-success { background: var(--ok-bg); color: var(--ok); border-color: var(--ok); }
+.btn-sm { padding: 3px 8px; font-size: 10px; }
+.btn:disabled { opacity: .4; cursor: not-allowed; pointer-events: none; }
+
+/* ── KPI CARDS (Reference tab) ── */
+.kpi-strip {
+  display: flex; gap: 10px; padding: 10px 14px;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  flex-shrink: 0; flex-wrap: wrap;
+}
+.kpi-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 8px 14px;
+  display: flex; flex-direction: column; gap: 3px; min-width: 110px;
+  position: relative; overflow: hidden;
+}
+.kpi-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--primary); }
+.kpi-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--text3); }
+.kpi-val { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1; }
+.kpi-sub { font-size: 10px; color: var(--text4); }
+.card-value { font-size: 20px; font-weight: 700; color: var(--text); }
+.card-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: var(--text3); font-weight: 600; }
+
+/* ── CONFIG PANELS (Filter / View / Column) ── */
+.config-panel {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 12px 14px; flex-shrink: 0;
+}
+.config-panel.hidden { display: none; }
+.config-panel-title { font-size: 11px; font-weight: 700; color: var(--text2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .5px; }
+.filters { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 14px; flex-shrink: 0; }
+.filter-group { display: flex; flex-direction: column; gap: 3px; }
+.filter-group label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .4px; }
+.filter-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-end; }
+.filter-row .filter-group { min-width: 160px; flex: 1; }
+.filter-group.search { flex: 2; min-width: 200px; }
+
+/* ── INPUTS ── */
+.input {
+  width: 100%; border: 1px solid var(--inp-bd); border-radius: var(--radius);
+  padding: 5px 8px; background: var(--inp-bg); color: var(--inp-txt);
+  outline: none; font-size: 12px; transition: border .15s;
+}
+.input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-lt); }
+select.input { cursor: pointer; }
+textarea.input { resize: vertical; min-height: 60px; }
+
+/* ── TABLE ── */
+.table-wrap { flex: 1; overflow: auto; min-height: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead th {
+  background: var(--surface); color: var(--text2); font-weight: 600; font-size: 11px;
+  padding: 0 8px; height: 32px; border-bottom: 2px solid var(--border);
+  border-right: 1px solid var(--border-light); position: sticky; top: 0; z-index: 5;
+  white-space: nowrap; text-align: left; cursor: pointer; user-select: none;
+}
+thead th:hover { background: var(--surface2); }
+tbody tr { border-bottom: 1px solid var(--border-light); transition: background .08s; }
+tbody tr:nth-child(even) { background: var(--row-alt); }
+tbody tr:hover { background: var(--row-hover); }
+tbody td { padding: 5px 8px; vertical-align: top; line-height: 1.45; }
+tbody td:first-child { white-space: nowrap; }
+.fav-btn { background: none; border: none; cursor: pointer; font-size: 14px; padding: 0; line-height: 1; color: var(--text4); }
+.fav-btn.on { color: #E85D04; }
+
+/* ── BADGES ── */
+.badge {
+  display: inline-block; padding: 1px 7px; border-radius: 2px;
+  font-size: 10px; font-weight: 600; white-space: nowrap;
+}
+.pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 22px; height: 18px; padding: 0 6px;
+  background: var(--pill); color: var(--pill-txt);
+  border-radius: 2px; font-size: 10px; font-weight: 700;
+}
+
+/* ── RECORD COUNT ── */
+#record-count {
+  font-size: 11px; color: var(--text3); font-weight: 600;
+  padding: 4px 14px; background: var(--surface); border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+/* ── EMPTY STATE ── */
+.empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 60px 20px; gap: 10px; color: var(--text3);
+}
+.empty h3 { font-size: 14px; font-weight: 600; color: var(--text2); }
+.empty p { font-size: 12px; text-align: center; max-width: 340px; }
+.hidden { display: none !important; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; background: var(--modal-bg);
+  z-index: 200; display: none; align-items: flex-start; justify-content: center;
+  padding: 40px 20px; overflow-y: auto;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-lg);
+  width: 100%; max-width: 800px; animation: modalIn .15s ease;
+}
+@keyframes modalIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+.modal-header {
+  display: flex; align-items: center; padding: 11px 16px;
+  border-bottom: 1px solid var(--border); background: var(--surface2); gap: 10px;
+}
+.modal-title { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+.form-grid {
+  padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  max-height: 70vh; overflow-y: auto;
+}
+.form-grid .full { grid-column: 1 / -1; }
+.form-group { display: flex; flex-direction: column; gap: 3px; }
+.form-label { font-size: 11px; font-weight: 600; color: var(--text2); }
+.form-label .req { color: var(--err); }
+.modal-footer {
+  display: flex; justify-content: flex-end; gap: 8px;
+  padding: 10px 16px; border-top: 1px solid var(--border); background: var(--surface2);
+}
+.check { display: flex; align-items: center; gap: 5px; font-size: 12px; cursor: pointer; }
+.check input { accent-color: var(--primary); }
+
+/* ── COLUMNS MANAGER IN CONFIG PANEL ── */
+.columns-grid {
+  display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px;
+}
+
+/* ── DASHBOARD ── */
+.dash-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px; padding: 16px;
+}
+.dash-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px;
+}
+.dash-card h3 { font-size: 12px; font-weight: 700; color: var(--text2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid var(--border-light); padding-bottom: 6px; }
+.dash-card p { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text2); padding: 4px 0; border-bottom: 1px solid var(--border-light); }
+.dash-card p:last-child { border-bottom: none; }
+
+/* ── DATA CENTER ── */
+.data-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px; padding: 16px;
+}
+.action-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px;
+}
+.action-card h3 { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.action-card p { font-size: 11px; color: var(--text3); margin-bottom: 10px; line-height: 1.5; }
+.action-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.offline-note { font-size: 11px; color: var(--warn); display: block; margin-top: 4px; }
+
+/* ── AUDIT ── */
+.audit-note { font-size: 11px; color: var(--text3); padding: 8px 14px; background: var(--surface2); border-bottom: 1px solid var(--border-light); }
+.audit-toolbar { display: flex; gap: 8px; padding: 8px 14px; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
+
+/* ── ADMIN ── */
+.admin-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 16px;
+}
+.admin-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.admin-card-header {
+  padding: 9px 13px; background: var(--surface2); border-bottom: 1px solid var(--border);
+  font-size: 12px; font-weight: 700; color: var(--text2);
+}
+.admin-card-sub { font-size: 11px; color: var(--text3); font-weight: 400; margin-top: 2px; }
+.admin-card-body { padding: 13px; overflow-y: auto; max-height: 420px; }
+.admin-row {
+  display: grid; grid-template-columns: 1fr 100px 50px 60px 80px auto;
+  gap: 5px; align-items: center; margin-bottom: 5px;
+}
+.value-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 5px; align-items: center; margin-bottom: 5px; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+  padding: 9px 16px; border-radius: var(--radius);
+  font-size: 12px; font-weight: 500; min-width: 220px;
+  transform: translateY(8px); opacity: 0; pointer-events: none;
+  transition: opacity .2s, transform .2s; box-shadow: var(--shadow-md);
+  border-left: 3px solid var(--primary);
+}
+.toast.show { opacity: 1; transform: none; pointer-events: auto; }
+.toast.success { background: var(--ok-bg); color: var(--ok); border-left-color: var(--ok); }
+.toast.error { background: var(--err-bg); color: var(--err); border-left-color: var(--err); }
+
+/* ── SAVED VIEWS / COLUMN PANEL ── */
+.view-panel-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  #sidebar { width: 44px; }
+  .tab-btn span { display: none; }
+  .nav-section-label { display: none; }
+  .admin-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .admin-row { grid-template-columns: 1fr 1fr auto; }
+}
+@media (max-width: 600px) {
+  #sidebar { display: none; }
+  .kpi-strip { flex-wrap: wrap; }
+}
+
+</style>
+</head>
+<body>
+
+<div id="app-shell">
+
+  <!-- ═══ HEADER ═══ -->
+  <header id="app-header">
+    <div class="hdr-brand">
+      <div class="hdr-mark">DT</div>
+      <span>Reference Tracker</span>
+    </div>
+    <div class="hdr-divider"></div>
+    <span class="hdr-sub">Enterprise Documentation &amp; Reference Platform</span>
+    <div class="hdr-spacer"></div>
+    <div class="hdr-ctrl">
+      <button class="hdr-btn" id="undo-btn" onclick="undoLast()" disabled title="Undo last action">
+        &#8617; Undo
+      </button>
+      <div class="hdr-divider"></div>
+      <select id="theme-select" class="theme-select" onchange="setTheme(this.value)" aria-label="Theme">
+        <option value="executive">Executive Light</option>
+        <option value="slate">Slate Dark</option>
+        <option value="redwood">Oracle Redwood</option>
+        <option value="midnight">Midnight Blue</option>
+      </select>
+      <div class="hdr-divider"></div>
+      <span class="hdr-ver">v1.0</span>
+    </div>
+  </header>
+
+  <!-- ═══ BODY ROW ═══ -->
+  <div id="app-body">
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <nav id="sidebar">
+      <div class="nav-section">
+        <div class="nav-section-label">Workspace</div>
+
+        <button class="tab-btn active" data-tab="reference" aria-label="Documentation Records">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+          </svg>
+          <span>Records</span>
+        </button>
+
+        <button class="tab-btn" data-tab="dashboard" aria-label="Analysis Dashboard">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+          </svg>
+          <span>Analysis</span>
+        </button>
+      </div>
+
+      <div class="nav-divider"></div>
+      <div class="nav-section">
+        <div class="nav-section-label">Governance</div>
+
+        <button class="tab-btn" data-tab="audit" aria-label="Audit Trail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          <span>Audit Trail</span>
+        </button>
+      </div>
+
+      <div class="nav-divider"></div>
+      <div class="nav-section">
+        <div class="nav-section-label">Setup</div>
+
+        <button class="tab-btn" data-tab="data" aria-label="Data Center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+          </svg>
+          <span>Data Center</span>
+        </button>
+
+        <button class="tab-btn" data-tab="admin" aria-label="Administration">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.07 4.93A10 10 0 005.64 19.07M4.93 4.93a10 10 0 0014.14 14.14"/>
+          </svg>
+          <span>Administration</span>
+        </button>
+      </div>
+
+      <div class="nav-footer" id="library-status"></div>
+    </nav>
+
+    <!-- ═══ MAIN AREA ═══ -->
+    <main id="main-area">
+
+      <!-- ─── TAB: RECORDS ─── -->
+      <section id="tab-reference" class="panel active">
+
+        <!-- Section header -->
+        <div class="section-header" style="flex-shrink:0">
+          <div>
+            <div class="section-title">Documentation Records</div>
+            <div class="section-sub">Manage scope, object, configuration, requirement and solution references</div>
+          </div>
+        </div>
+
+        <!-- Record action toolbar -->
+        <div class="record-toolbar" aria-label="Record actions">
+          <button class="btn btn-primary" onclick="openAddModal()">&#43; New Record</button>
+          <button class="btn btn-outline" onclick="toggleFavourites()">&#9733; Favourites</button>
+          <div class="spacer"></div>
+          <button class="btn btn-outline" onclick="toggleFilterPanel()">&#9660; Filters</button>
+          <button class="btn btn-outline" onclick="toggleViewPanel()">&#9776; Views</button>
+          <button class="btn btn-outline" onclick="toggleColumnPanel()">&#9783; Columns</button>
+        </div>
+
+        <!-- KPI strip -->
+        <div class="kpi-strip">
+          <div class="kpi-card">
+            <div class="kpi-label">Total Records</div>
+            <div class="kpi-val" id="card-total">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Scopes</div>
+            <div class="kpi-val" id="card-scopes">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Objects</div>
+            <div class="kpi-val" id="card-objects">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">This Month</div>
+            <div class="kpi-val" id="card-month">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Favourites</div>
+            <div class="kpi-val" id="card-fav">0</div>
+          </div>
+        </div>
+
+        <!-- Views panel -->
+        <div id="view-panel" class="config-panel hidden">
+          <div class="config-panel-title">Saved Views</div>
+          <div class="view-panel-row">
+            <div class="filter-group" style="flex:1;min-width:200px">
+              <label>View Name</label>
+              <input class="input" id="view-name" placeholder="e.g. CPQ Documentation">
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="saveCurrentView()" style="margin-top:16px">Save View</button>
+            <div class="filter-group" style="flex:1;min-width:160px">
+              <label>Load View</label>
+              <select class="input" id="saved-views">
+                <option value="">Select saved view</option>
+              </select>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="applySelectedView()" style="margin-top:16px">Apply</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteSelectedView()" style="margin-top:16px">Delete</button>
+          </div>
+        </div>
+
+        <!-- Columns panel -->
+        <div id="column-panel" class="config-panel hidden">
+          <div class="config-panel-title">Column Visibility</div>
+          <div class="columns-grid" id="column-options"></div>
+          <div style="display:flex;gap:6px;margin-top:4px">
+            <button class="btn btn-outline btn-sm" onclick="showAllColumns()">Show All</button>
+            <button class="btn btn-outline btn-sm" onclick="resetDefaultColumns()">Reset Default</button>
+          </div>
+        </div>
+
+        <!-- Filter panel -->
+        <div id="filter-panel" class="filters">
+          <div class="filter-row">
+            <div class="filter-group search">
+              <label>Search</label>
+              <input class="input" id="search" placeholder="Search across all fields...">
+            </div>
+            <div class="filter-group">
+              <label>Scope</label>
+              <select class="input" id="filter-scope"><option value="">All Scopes</option></select>
+            </div>
+            <div class="filter-group">
+              <label>Object</label>
+              <select class="input" id="filter-object"><option value="">All Objects</option></select>
+            </div>
+            <div class="filter-group">
+              <label>Configuration</label>
+              <select class="input" id="filter-configuration"><option value="">All</option></select>
+            </div>
+            <div style="display:flex;align-items:flex-end">
+              <button class="btn btn-outline btn-sm" id="clear-filters" onclick="clearFilters()" style="margin-bottom:0">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Record count -->
+        <div id="record-count"></div>
+
+        <!-- Data grid -->
+        <div class="table-wrap">
+          <table>
+            <thead><tr id="header-row"></tr></thead>
+            <tbody id="body-row"></tbody>
+          </table>
+          <div id="empty" class="empty hidden">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+            </svg>
+            <h3>No records found</h3>
+            <p>No references match your current filters. Try adjusting your search or add a new record.</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ─── TAB: ANALYSIS ─── -->
+      <section id="tab-dashboard" class="panel">
+        <div class="section-header" style="flex-shrink:0">
+          <div>
+            <div class="section-title">Analysis</div>
+            <div class="section-sub">Coverage, recent activity, and documentation quality indicators</div>
+          </div>
+        </div>
+        <div class="panel-content">
+          <div class="dash-grid">
+            <div class="dash-card">
+              <h3>By Scope</h3>
+              <div id="dash-scope"><p class="muted" style="color:var(--text3);font-size:12px;padding:8px 0">No data yet.</p></div>
+            </div>
+            <div class="dash-card">
+              <h3>By Configuration</h3>
+              <div id="dash-configuration"><p style="color:var(--text3);font-size:12px;padding:8px 0">No data yet.</p></div>
+            </div>
+            <div class="dash-card">
+              <h3>Recently Updated</h3>
+              <div id="dash-recent"><p style="color:var(--text3);font-size:12px;padding:8px 0">No data yet.</p></div>
+            </div>
+            <div class="dash-card">
+              <h3>Quality Indicators</h3>
+              <div id="dash-quality"><p style="color:var(--text3);font-size:12px;padding:8px 0">No data yet.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── TAB: AUDIT ─── -->
+      <section id="tab-audit" class="panel">
+        <div class="section-header" style="flex-shrink:0">
+          <div>
+            <div class="section-title">Audit Trail</div>
+            <div class="section-sub">History of all changes performed in this workspace</div>
+          </div>
+        </div>
+        <div class="audit-note">
+          Tracks add, edit, delete, favourite, import, export, restore, column, value and view changes performed in this browser session.
+        </div>
+        <div class="audit-toolbar">
+          <button class="btn btn-outline" onclick="exportAuditCsv()">&#8593; Export Audit CSV</button>
+          <button class="btn btn-danger" onclick="clearAudit()">Clear Audit Trail</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:160px">Date / Time</th>
+                <th style="width:120px">Action</th>
+                <th style="width:120px">ID</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="audit-body"></tbody>
+          </table>
+          <div id="audit-empty" class="empty hidden">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+            <h3>No audit history yet</h3>
+            <p>Actions will appear here as you use the application.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── TAB: DATA CENTER ─── -->
+      <section id="tab-data" class="panel">
+        <div class="section-header" style="flex-shrink:0">
+          <div>
+            <div class="section-title">Data Center</div>
+            <div class="section-sub">Import, export, backup and restore reference data</div>
+          </div>
+        </div>
+        <div class="panel-content">
+          <div class="data-grid">
+            <div class="action-card">
+              <h3>Import Records</h3>
+              <p>Load records from Excel (.xlsx) or CSV. Column values are added to the Values Manager automatically.</p>
+              <div class="action-row">
+                <button class="btn btn-primary" onclick="importExcel()">&#8659; Import Excel / CSV</button>
+              </div>
+            </div>
+            <div class="action-card">
+              <h3>Export Records</h3>
+              <p>Export current filtered dataset. Excel is formatted when the library is available; CSV works offline.</p>
+              <div class="action-row">
+                <button class="btn btn-outline" onclick="exportExcel()">&#8593; Excel</button>
+                <button class="btn btn-outline" onclick="exportCsv()">&#8593; CSV</button>
+                <button class="btn btn-outline" onclick="exportRecordsJson()">&#8593; JSON</button>
+              </div>
+            </div>
+            <div class="action-card">
+              <h3>Backup &amp; Restore</h3>
+              <p>Full backup includes records, columns, values, views, settings and audit trail. Suitable for migration.</p>
+              <div class="action-row">
+                <button class="btn btn-outline" onclick="exportBackup()">&#8593; Export Backup</button>
+                <button class="btn btn-outline" onclick="document.getElementById('restore-input').click()">&#8659; Restore Backup</button>
+              </div>
+            </div>
+            <div class="action-card">
+              <h3>Maintenance</h3>
+              <p>Reset all local browser data. This action is irreversible. Use with caution in production environments.</p>
+              <div class="action-row">
+                <button class="btn btn-danger" onclick="clearAllData()">&#10005; Clear All Local Data</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── TAB: ADMINISTRATION ─── -->
+      <section id="tab-admin" class="panel">
+        <div class="section-header" style="flex-shrink:0">
+          <div>
+            <div class="section-title">Administration</div>
+            <div class="section-sub">Manage columns, dropdown values, and reference configuration</div>
+          </div>
+        </div>
+        <div class="panel-content">
+          <div class="admin-grid">
+
+            <!-- Columns Manager -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                Columns Manager
+                <div class="admin-card-sub">Add, rename, reorder and control columns. Core columns cannot be removed.</div>
+              </div>
+              <div class="admin-card-body">
+                <div id="admin-columns"></div>
+                <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="addColumnFromAdmin()">+ Add Column</button>
+              </div>
+            </div>
+
+            <!-- Values Manager -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                Values Manager
+                <div class="admin-card-sub">Manage dropdown values. Values can be reordered and deactivated.</div>
+              </div>
+              <div class="admin-card-body">
+                <div class="filter-group" style="margin-bottom:10px">
+                  <label>Select Column</label>
+                  <select class="input" id="value-column" onchange="renderValueManager()"></select>
+                </div>
+                <div id="admin-values"></div>
+                <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="addValueFromAdmin()">+ Add Value</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ═══ MODAL ═══ -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Add Reference</div>
+      <button class="btn btn-outline btn-sm" onclick="closeModal()">&#215; Close</button>
+    </div>
+    <div class="form-grid" id="form-grid"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveReference()">Save Record</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HIDDEN FILE INPUTS ═══ -->
+<input type="file" id="file-input" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleImportFile(event)">
+<input type="file" id="restore-input" accept=".json" class="hidden" onchange="restoreBackup(event)">
+
+<!-- ═══ TOAST ═══ -->
+<div id="toast" class="toast"></div>
+
+<script>
+const STORAGE='docRefEnterpriseV2';
+const CORE_KEYS=['idText','scope','object','configuration','requirement','solution','updatedAt'];
+const DEFAULT_COLUMNS=[
+ {key:'idText',label:'ID',type:'text',width:120,exportWidth:16,required:true,filter:false,core:true,active:true,seq:1},
+ {key:'scope',label:'Scope',type:'dropdown',width:150,exportWidth:18,required:false,filter:true,core:true,active:true,seq:2},
+ {key:'object',label:'Object',type:'dropdown',width:160,exportWidth:20,required:false,filter:true,core:true,active:true,seq:3},
+ {key:'configuration',label:'Configuration',type:'dropdown',width:190,exportWidth:24,required:false,filter:true,core:true,active:true,seq:4},
+ {key:'requirement',label:'Requirement',type:'longtext',width:330,exportWidth:55,required:true,filter:false,core:true,active:true,seq:5},
+ {key:'solution',label:'Solution',type:'longtext',width:360,exportWidth:65,required:true,filter:false,core:true,active:true,seq:6},
+ {key:'updatedAt',label:'Last Updated',type:'date',width:170,exportWidth:22,required:false,filter:false,core:true,active:true,seq:7}
+];
+let state={records:[],columns:structuredClone(DEFAULT_COLUMNS),settings:{theme:'executive'},values:{scope:[{v:'Sales',active:true},{v:'CPQ',active:true},{v:'Service',active:true}],object:[{v:'Opportunity',active:true},{v:'Quote',active:true},{v:'Account',active:true}],configuration:[{v:'Page Layout',active:true},{v:'Approval Rule',active:true},{v:'Workflow',active:true}]},visible:DEFAULT_COLUMNS.map(c=>c.key),audit:[],views:[],undo:[],sort:{key:'updatedAt',dir:'desc'},showFavourites:false,editingId:null};
+let filtered=[];const $=id=>document.getElementById(id);const safe=v=>v==null?'':String(v);const esc=v=>safe(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));const nowIso=()=>new Date().toISOString();const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);const fmtDate=v=>v?new Date(v).toLocaleString():'';
+function orderedColumns(){return [...state.columns].filter(c=>c.active!==false).sort((a,b)=>(+a.seq||999)-(+b.seq||999))}function getColumn(k){return state.columns.find(c=>c.key===k)}function slug(s){return safe(s).trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'')||('field_'+Date.now().toString(36))}
+function snapshot(){state.undo.unshift(JSON.stringify({records:state.records,columns:state.columns,values:state.values,visible:state.visible,views:state.views,sort:state.sort,showFavourites:state.showFavourites}));state.undo=state.undo.slice(0,20);updateUndoButton()}function undoLast(){if(!state.undo.length)return;const p=JSON.parse(state.undo.shift());Object.assign(state,p);state.editingId=null;save(false);renderAll();addAudit('Undo','','Reverted last change');toast('Last change reverted.','success')}function updateUndoButton(){const b=$('undo-btn');if(b)b.disabled=!state.undo.length}
+function addAudit(action,idText,details){state.audit.unshift({at:nowIso(),action,idText:idText||'',details:details||''});state.audit=state.audit.slice(0,1500);save(false);renderAudit()}function save(push=true){localStorage.setItem(STORAGE,JSON.stringify(state));updateUndoButton()}function load(){try{const p=JSON.parse(localStorage.getItem(STORAGE)||'{}');if(p&&Object.keys(p).length){state={...state,...p};migrateState()}}catch(e){console.warn(e)}}
+function migrateState(){state.columns=(state.columns&&state.columns.length?state.columns:structuredClone(DEFAULT_COLUMNS)).map((c,i)=>({...c,active:c.active!==false,seq:c.seq||i+1}));state.values=state.values||{};state.visible=(state.visible&&state.visible.length?state.visible:orderedColumns().map(c=>c.key)).filter(k=>getColumn(k));state.records=(state.records||[]).map(r=>({...r,uid:r.uid||uid(),favourite:!!r.favourite,updatedAt:r.updatedAt||nowIso()}));state.audit=state.audit||[];state.views=state.views||[];state.undo=state.undo||[];state.sort=state.sort||{key:'updatedAt',dir:'desc'};state.settings=state.settings||{theme:'executive'}}
+function applyTheme(){const theme=state.settings?.theme||'executive';document.body.classList.remove('theme-slate','theme-redwood','theme-midnight');if(theme!=='executive')document.body.classList.add('theme-'+theme);const sel=$('theme-select');if(sel)sel.value=theme}
+function setTheme(theme){state.settings=state.settings||{};state.settings.theme=theme;save(false);applyTheme();addAudit('Theme','',`Changed theme to ${theme}`);toast('Theme updated.','success')}
+function init(){load();applyTheme();bindTabs();['search','filter-scope','filter-object','filter-configuration'].forEach(id=>$(id).addEventListener('input',renderTable));if(!window.XLSX)$('library-status').textContent='Excel library unavailable. CSV and JSON remain available offline.';renderAll()}function bindTabs(){document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('tab-'+b.dataset.tab).classList.add('active');renderAll()}))}
+function renderAll(){applyTheme();populateFilters();renderColumnOptions();renderForm();renderViews();renderTable();renderDashboard();renderAudit();renderAdmin();updateUndoButton()}
+function populateFilters(){['scope','object','configuration'].forEach(k=>{const sel=$('filter-'+k);if(!sel)return;const current=sel.value;const vals=[...new Set([...(state.values[k]||[]).filter(x=>x.active!==false).map(x=>x.v),...state.records.map(r=>r[k]).filter(Boolean)])].sort();sel.innerHTML='<option value="">All '+(getColumn(k)?.label||k)+'s</option>'+vals.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');sel.value=current})}
+function activeFilters(){return{q:$('search').value.trim().toLowerCase(),scope:$('filter-scope').value,object:$('filter-object').value,configuration:$('filter-configuration').value}}function clearFilters(){$('search').value='';$('filter-scope').value='';$('filter-object').value='';$('filter-configuration').value='';state.showFavourites=false;renderTable()}function toggleFilterPanel(){$('filter-panel').classList.toggle('hidden')}function toggleColumnPanel(){$('column-panel').classList.toggle('hidden')}function toggleViewPanel(){$('view-panel').classList.toggle('hidden')}function toggleFavourites(){state.showFavourites=!state.showFavourites;save(false);renderTable();toast(state.showFavourites?'Showing favourites only.':'Showing all records.','success')}
+function renderCards(){const scopes=new Set(state.records.map(r=>r.scope).filter(Boolean));const objects=new Set(state.records.map(r=>r.object).filter(Boolean));const m=new Date().getMonth(),y=new Date().getFullYear();$('card-total').textContent=state.records.length;$('card-scopes').textContent=scopes.size;$('card-objects').textContent=objects.size;$('card-month').textContent=state.records.filter(r=>{const d=new Date(r.updatedAt);return d.getMonth()===m&&d.getFullYear()===y}).length;$('card-fav').textContent=state.records.filter(r=>r.favourite).length}
+function renderTable(){const cols=orderedColumns();const f=activeFilters();filtered=state.records.filter(r=>{const blob=cols.map(c=>safe(r[c.key])).join(' ').toLowerCase();return(!f.q||blob.includes(f.q))&&(!f.scope||r.scope===f.scope)&&(!f.object||r.object===f.object)&&(!f.configuration||r.configuration===f.configuration)&&(!state.showFavourites||r.favourite)});filtered.sort((a,b)=>{let av=a[state.sort.key],bv=b[state.sort.key];if(state.sort.key==='updatedAt'){av=new Date(av||0);bv=new Date(bv||0)}else{av=safe(av).toLowerCase();bv=safe(bv).toLowerCase()}return (av>bv?1:av<bv?-1:0)*(state.sort.dir==='asc'?1:-1)});$('clear-filters').style.display=(f.q||f.scope||f.object||f.configuration||state.showFavourites)?'inline-block':'none';$('record-count').textContent=`Showing ${filtered.length} of ${state.records.length} references${state.showFavourites?' • Favourites only':''}`;const visibleCols=cols.filter(c=>state.visible.includes(c.key));$('header-row').innerHTML='<th style="width:60px;cursor:default">Fav</th>'+visibleCols.map(c=>`<th style="width:${+c.width||160}px" onclick="sortBy('${c.key}')">${esc(c.label)} ${state.sort.key===c.key?(state.sort.dir==='asc'?'▲':'▼'):''}</th>`).join('')+'<th style="width:120px;cursor:default">Actions</th>';$('body-row').innerHTML=filtered.map(r=>`<tr><td><button class="btn btn-sm btn-outline favourite" onclick="toggleRecordFavourite('${r.uid}')">${r.favourite?'★':'☆'}</button></td>${visibleCols.map(c=>`<td class="col-${c.key}"><div class="cell">${esc(c.key==='updatedAt'?fmtDate(r[c.key]):r[c.key])}</div></td>`).join('')}<td><div class="actions"><button class="btn btn-outline btn-sm" onclick="editReference('${r.uid}')">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteReference('${r.uid}')">Delete</button></div></td></tr>`).join('');$('empty').classList.toggle('hidden',filtered.length>0);renderCards();renderDashboard()}
+function sortBy(k){if(state.sort.key===k)state.sort.dir=state.sort.dir==='asc'?'desc':'asc';else state.sort={key:k,dir:'asc'};save(false);renderTable()}function toggleRecordFavourite(id){const r=state.records.find(x=>x.uid===id);if(!r)return;snapshot();r.favourite=!r.favourite;r.updatedAt=nowIso();addAudit(r.favourite?'Favourite':'Unfavourite',r.idText,r.favourite?'Marked as favourite':'Removed from favourites');save();renderAll()}
+function renderForm(){const grid=$('form-grid');if(!grid)return;grid.innerHTML=orderedColumns().filter(c=>c.key!=='updatedAt').map(c=>{const full=['longtext','textarea'].includes(c.type)||['requirement','solution'].includes(c.key);const tag=c.type==='longtext'?`<textarea id="f-${c.key}" placeholder="${esc(c.label)}"></textarea>`:c.type==='dropdown'?`<input class="input" id="f-${c.key}" list="list-${c.key}" placeholder="${esc(c.label)}"><datalist id="list-${c.key}">${(state.values[c.key]||[]).filter(v=>v.active!==false).map(v=>`<option value="${esc(v.v)}"></option>`).join('')}</datalist>`:c.type==='date'?`<input class="input" type="date" id="f-${c.key}">`:`<input class="input" id="f-${c.key}" placeholder="${esc(c.label)}">`;return `<div class="form-group ${full?'full':''}"><label>${esc(c.label)}${c.required?' *':''}</label>${tag}</div>`}).join('')}
+function openAddModal(){state.editingId=null;$('modal-title').textContent='Add Reference';renderForm();orderedColumns().forEach(c=>{const el=$('f-'+c.key);if(el)el.value=''});$('f-idText').value=nextId();$('modal').classList.add('open')}function closeModal(){$('modal').classList.remove('open');state.editingId=null}function nextId(){const n=state.records.length+1;return 'REF-'+String(n).padStart(3,'0')}
+function saveReference(){const rec={uid:state.editingId||uid(),favourite:false,updatedAt:nowIso()};for(const c of orderedColumns()){if(c.key==='updatedAt')continue;const el=$('f-'+c.key);rec[c.key]=el?safe(el.value).trim():'';if(c.required&&!rec[c.key]){toast(`${c.label} is required.`,'error');return}if(c.type==='dropdown'&&rec[c.key])ensureValue(c.key,rec[c.key])}if(state.editingId){const idx=state.records.findIndex(r=>r.uid===state.editingId);if(idx<0)return;rec.favourite=state.records[idx].favourite;snapshot();state.records[idx]={...state.records[idx],...rec};addAudit('Updated',rec.idText,'Reference updated')}else{snapshot();state.records.push(rec);addAudit('Created',rec.idText,'Reference created')}save();closeModal();renderAll();toast('Reference saved.','success')}
+function editReference(id){const r=state.records.find(x=>x.uid===id);if(!r)return;state.editingId=id;$('modal-title').textContent='Edit Reference';renderForm();orderedColumns().forEach(c=>{const el=$('f-'+c.key);if(el)el.value=r[c.key]||''});$('modal').classList.add('open')}function deleteReference(id){const r=state.records.find(x=>x.uid===id);if(!r)return;if(!confirm('Delete this reference?'))return;snapshot();state.records=state.records.filter(x=>x.uid!==id);addAudit('Deleted',r.idText,'Reference deleted');save();renderAll();toast('Reference deleted.','success')}
+function renderColumnOptions(){$('column-options').innerHTML=orderedColumns().map(c=>`<label class="check"><input type="checkbox" ${state.visible.includes(c.key)?'checked':''} onchange="setColumn('${c.key}',this.checked)"> ${esc(c.label)}</label>`).join('')}function setColumn(k,on){snapshot();if(on&&!state.visible.includes(k))state.visible.push(k);if(!on&&state.visible.length>1)state.visible=state.visible.filter(x=>x!==k);addAudit('Column','',`${on?'Shown':'Hidden'} column ${getColumn(k)?.label||k}`);save();renderColumnOptions();renderTable()}function showAllColumns(){snapshot();state.visible=orderedColumns().map(c=>c.key);addAudit('Column','','Shown all columns');save();renderAll()}function resetDefaultColumns(){snapshot();state.visible=DEFAULT_COLUMNS.map(c=>c.key);addAudit('Column','','Reset visible columns to default');save();renderAll()}
+function ensureValue(k,v){state.values[k]=state.values[k]||[];if(!state.values[k].some(x=>x.v===v))state.values[k].push({v,active:true})}
+function importExcel(){$('file-input').value='';$('file-input').click()}function cleanHeader(v){return safe(v).replace(/^\uFEFF/,'').replace(/\s+/g,' ').trim().toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}function parseCsv(text){const rows=[];let row=[],cur='',q=false;for(let i=0;i<text.length;i++){const ch=text[i],nx=text[i+1];if(ch==='"'&&q&&nx==='"'){cur+='"';i++}else if(ch==='"'){q=!q}else if(ch===','&&!q){row.push(cur);cur=''}else if((ch==='\n'||ch==='\r')&&!q){if(ch==='\r'&&nx==='\n')i++;row.push(cur);rows.push(row);row=[];cur=''}else cur+=ch}row.push(cur);rows.push(row);return rows.filter(r=>r.some(c=>safe(c).trim()))}
+function importRows(rows){if(!rows.length){toast('No rows found.','error');return}const headers=rows[0].map(cleanHeader);const colMap={};orderedColumns().forEach(c=>{colMap[cleanHeader(c.label)]=c.key;colMap[cleanHeader(c.key)]=c.key});colMap.id='idText';colMap['last updated']='updatedAt';let added=0;snapshot();rows.slice(1).forEach(row=>{const r={uid:uid(),favourite:false,updatedAt:nowIso()};headers.forEach((h,i)=>{const field=colMap[h];if(field)r[field]=safe(row[i]).trim()});if(!r.idText)r.idText=nextId();if(orderedColumns().some(c=>safe(r[c.key]).trim())){orderedColumns().filter(c=>c.type==='dropdown').forEach(c=>{if(r[c.key])ensureValue(c.key,r[c.key])});state.records.push(r);added++}});if(added){addAudit('Imported','',`Imported ${added} references`);save();renderAll();toast(`Imported ${added} references.`, 'success')}else{state.undo.shift();toast('No valid references were imported.','error')}}
+function handleImportFile(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{try{if(/\.csv$/i.test(file.name)||!window.XLSX){importRows(parseCsv(ev.target.result))}else{const wb=XLSX.read(ev.target.result,{type:'binary',cellDates:true});const ws=wb.Sheets[wb.SheetNames[0]];const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});importRows(rows)}}catch(err){console.error(err);toast('Import failed. Check the file format.','error')}};if(/\.csv$/i.test(file.name)||!window.XLSX)reader.readAsText(file);else reader.readAsBinaryString(file)}
+function exportDataRows(data=filtered.length?filtered:state.records){const cols=orderedColumns();return data.map(r=>{const o={};cols.forEach(c=>o[c.label]=c.key==='updatedAt'?fmtDate(r[c.key]):safe(r[c.key]));return o})}function exportExcel(){const data=exportDataRows();if(!data.length){toast('No data to export.','error');return}if(!window.XLSX){exportCsv();toast('Excel library unavailable; exported CSV instead.','error');return}const ws=XLSX.utils.json_to_sheet(data);ws['!cols']=orderedColumns().map(c=>({wch:+c.exportWidth||20}));const range=XLSX.utils.decode_range(ws['!ref']);for(let R=range.s.r;R<=range.e.r;R++){for(let C=range.s.c;C<=range.e.c;C++){const addr=XLSX.utils.encode_cell({r:R,c:C});if(!ws[addr])continue;ws[addr].s={font:{bold:R===0,color:{rgb:R===0?'FFFFFF':'111827'}},fill:R===0?{fgColor:{rgb:'205EA8'}}:undefined,alignment:{vertical:'top',wrapText:true},border:{top:{style:'thin',color:{rgb:'D7DEEA'}},bottom:{style:'thin',color:{rgb:'D7DEEA'}},left:{style:'thin',color:{rgb:'D7DEEA'}},right:{style:'thin',color:{rgb:'D7DEEA'}}}}}}const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Documentation Reference');XLSX.writeFile(wb,'Documentation_Reference.xlsx');addAudit('Exported','','Excel export generated');toast('Excel exported.','success')}function csvEscape(v){v=safe(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}function exportCsv(){const rows=exportDataRows();if(!rows.length){toast('No data to export.','error');return}const headers=Object.keys(rows[0]);const csv=[headers.join(','),...rows.map(r=>headers.map(h=>csvEscape(r[h])).join(','))].join('\n');download('Documentation_Reference.csv',csv,'text/csv');addAudit('Exported','','CSV export generated');toast('CSV exported.','success')}function exportRecordsJson(){const payload=JSON.stringify({app:'Documentation Reference',type:'records',exportedAt:nowIso(),records:state.records},null,2);download('Documentation_Reference_Records.json',payload,'application/json');addAudit('Exported','','Records JSON export generated');toast('Records JSON exported.','success')}function exportBackup(){const payload=JSON.stringify({app:'Documentation Reference',version:'3.0',exportedAt:nowIso(),state},null,2);download('Documentation_Reference_Full_Backup.json',payload,'application/json');addAudit('Backup','','Full backup exported');toast('Full backup exported.','success')}function restoreBackup(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{try{const p=JSON.parse(ev.target.result);snapshot();const restored=p.state||p;state={...state,...restored};migrateState();addAudit('Restored','',`Backup restored from ${file.name}`);save();renderAll();toast('Backup restored.','success')}catch(err){console.error(err);toast('Restore failed. Invalid backup file.','error')}};reader.readAsText(file)}function download(name,content,type){const blob=new Blob([content],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},0)}
+function renderDashboard(){const top=(key)=>{const m={};state.records.forEach(r=>{const v=r[key]||'Blank';m[v]=(m[v]||0)+1});return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,8)};$('dash-scope').innerHTML=top('scope').map(([k,v])=>`<p><span class="pill">${v}</span> ${esc(k)}</p>`).join('')||'<p class="muted">No data yet.</p>';$('dash-configuration').innerHTML=top('configuration').map(([k,v])=>`<p><span class="pill">${v}</span> ${esc(k)}</p>`).join('')||'<p class="muted">No data yet.</p>';$('dash-recent').innerHTML=[...state.records].sort((a,b)=>new Date(b.updatedAt)-new Date(a.updatedAt)).slice(0,8).map(r=>`<p><b>${esc(r.idText)}</b> — ${esc(r.requirement||r.object||'Reference')}<br><span class="muted">${fmtDate(r.updatedAt)}</span></p>`).join('')||'<p class="muted">No data yet.</p>';const missing=state.records.filter(r=>!r.requirement||!r.solution).length;$('dash-quality').innerHTML=`<p><span class="pill">${missing}</span> Missing requirement or solution</p><p><span class="pill">${state.records.filter(r=>r.favourite).length}</span> Favourite records</p><p><span class="pill">${state.columns.length}</span> Managed columns</p>`}
+function renderViews(){const sel=$('saved-views');if(!sel)return;sel.innerHTML='<option value="">Select saved view</option>'+state.views.map(v=>`<option value="${esc(v.name)}">${esc(v.name)}</option>`).join('')}function saveCurrentView(){const name=$('view-name').value.trim();if(!name){toast('View name is required.','error');return}const view={name,filters:activeFilters(),visible:[...state.visible],sort:{...state.sort},showFavourites:state.showFavourites};snapshot();state.views=state.views.filter(v=>v.name!==name);state.views.push(view);addAudit('View','',`Saved view ${name}`);save();renderViews();toast('View saved.','success')}function applySelectedView(){const name=$('saved-views').value;if(!name)return;const v=state.views.find(x=>x.name===name);if(!v)return;state.visible=[...v.visible];state.sort={...v.sort};state.showFavourites=!!v.showFavourites;$('search').value=v.filters?.q||'';$('filter-scope').value=v.filters?.scope||'';$('filter-object').value=v.filters?.object||'';$('filter-configuration').value=v.filters?.configuration||'';renderAll();toast('View applied.','success')}function deleteSelectedView(){const name=$('saved-views').value;if(!name)return;snapshot();state.views=state.views.filter(v=>v.name!==name);addAudit('View','',`Deleted view ${name}`);save();renderAll();toast('View deleted.','success')}
+function renderAdmin(){renderColumnsManager();renderValueColumnSelect();renderValueManager()}function renderColumnsManager(){const wrap=$('admin-columns');if(!wrap)return;wrap.innerHTML=state.columns.sort((a,b)=>(+a.seq||999)-(+b.seq||999)).map(c=>`<div class="admin-row"><input class="input" value="${esc(c.label)}" onchange="updateColumn('${c.key}','label',this.value)"><select onchange="updateColumn('${c.key}','type',this.value)"><option ${c.type==='text'?'selected':''} value="text">Text</option><option ${c.type==='longtext'?'selected':''} value="longtext">Long Text</option><option ${c.type==='dropdown'?'selected':''} value="dropdown">Dropdown</option><option ${c.type==='date'?'selected':''} value="date">Date</option><option ${c.type==='number'?'selected':''} value="number">Number</option><option ${c.type==='yesno'?'selected':''} value="yesno">Yes/No</option><option ${c.type==='url'?'selected':''} value="url">URL</option></select><input class="input" type="number" min="1" value="${+c.seq||1}" onchange="updateColumn('${c.key}','seq',this.value)"><input class="input" type="number" min="70" value="${+c.width||160}" onchange="updateColumn('${c.key}','width',this.value)"><label class="check"><input type="checkbox" ${c.required?'checked':''} onchange="updateColumn('${c.key}','required',this.checked)"> Required</label><button class="btn ${c.core?'btn-outline':'btn-danger'} btn-sm" onclick="${c.core?`toggleColumnActive('${c.key}')`:`removeColumn('${c.key}')`}">${c.core?(c.active===false?'Activate':'Deactivate'):'Remove'}</button></div>`).join('')+'<div class="admin-row"><input class="input" id="new-col-label" placeholder="New column label"><select id="new-col-type"><option value="text">Text</option><option value="longtext">Long Text</option><option value="dropdown">Dropdown</option><option value="date">Date</option><option value="number">Number</option><option value="yesno">Yes/No</option><option value="url">URL</option></select><input class="input" id="new-col-seq" type="number" placeholder="Seq"><input class="input" id="new-col-width" type="number" placeholder="Width"><label class="check"><input id="new-col-required" type="checkbox"> Required</label><span class="muted">New Column</span></div>'}function updateColumn(k,field,value){const c=getColumn(k);if(!c)return;snapshot();c[field]=(field==='seq'||field==='width'||field==='exportWidth')?+value:field==='required'?!!value:value;if(field==='type'&&value==='dropdown')state.values[k]=state.values[k]||[];addAudit('Column','',`Updated column ${c.label}`);save();renderAll()}function addColumnFromAdmin(){const label=$('new-col-label').value.trim();if(!label){toast('Column label is required.','error');return}let key=slug(label),i=2;while(getColumn(key)){key=slug(label)+'_'+i++}snapshot();state.columns.push({key,label,type:$('new-col-type').value,width:+$('new-col-width').value||180,exportWidth:22,required:$('new-col-required').checked,filter:false,core:false,active:true,seq:+$('new-col-seq').value||state.columns.length+1});state.visible.push(key);if($('new-col-type').value==='dropdown')state.values[key]=[];addAudit('Column','',`Added column ${label}`);save();renderAll();toast('Column added.','success')}function removeColumn(k){const c=getColumn(k);if(!c||c.core)return;if(!confirm('Remove this column? Existing values for this column will also be removed from records.'))return;snapshot();state.columns=state.columns.filter(x=>x.key!==k);state.visible=state.visible.filter(x=>x!==k);state.records.forEach(r=>delete r[k]);delete state.values[k];addAudit('Column','',`Removed column ${c.label}`);save();renderAll();toast('Column removed.','success')}function toggleColumnActive(k){const c=getColumn(k);if(!c)return;snapshot();c.active=c.active===false; if(c.active===false)state.visible=state.visible.filter(x=>x!==k);else if(!state.visible.includes(k))state.visible.push(k);addAudit('Column','',`${c.active===false?'Deactivated':'Activated'} column ${c.label}`);save();renderAll()}
+function renderValueColumnSelect(){const sel=$('value-column');if(!sel)return;const current=sel.value;sel.innerHTML=state.columns.filter(c=>c.type==='dropdown').map(c=>`<option value="${esc(c.key)}">${esc(c.label)}</option>`).join('');if(current&&[...sel.options].some(o=>o.value===current))sel.value=current}function renderValueManager(){const k=$('value-column')?.value;const wrap=$('admin-values');if(!wrap||!k)return;state.values[k]=state.values[k]||[];wrap.innerHTML=state.values[k].map((x,i)=>`<div class="value-row"><input class="input" value="${esc(x.v)}" onchange="renameValue('${k}',${i},this.value)"><button class="btn btn-outline btn-sm" onclick="moveValue('${k}',${i},-1)">↑</button><button class="btn btn-outline btn-sm" onclick="moveValue('${k}',${i},1)">↓</button><button class="btn ${x.active===false?'btn-success':'btn-danger'} btn-sm" onclick="toggleValue('${k}',${i})">${x.active===false?'Activate':'Deactivate'}</button></div>`).join('')+'<div class="value-row"><input class="input" id="new-value" placeholder="New value"><span></span><span></span><span></span></div>'}function addValueFromAdmin(){const k=$('value-column').value,v=$('new-value').value.trim();if(!v)return;snapshot();ensureValue(k,v);addAudit('Value','',`Added value ${v}`);save();renderAll();toast('Value added.','success')}function renameValue(k,i,newVal){newVal=newVal.trim();if(!newVal)return;const old=state.values[k][i].v;snapshot();state.values[k][i].v=newVal;state.records.forEach(r=>{if(r[k]===old){r[k]=newVal;r.updatedAt=nowIso()}});addAudit('Value','',`Renamed ${old} to ${newVal}`);save();renderAll()}function toggleValue(k,i){snapshot();state.values[k][i].active=state.values[k][i].active===false;addAudit('Value','',`${state.values[k][i].active===false?'Deactivated':'Activated'} value ${state.values[k][i].v}`);save();renderAll()}function moveValue(k,i,d){const arr=state.values[k];const ni=i+d;if(ni<0||ni>=arr.length)return;snapshot();[arr[i],arr[ni]]=[arr[ni],arr[i]];addAudit('Value','','Reordered values');save();renderAll()}
+function renderAudit(){const body=$('audit-body');if(!body)return;body.innerHTML=state.audit.map(a=>`<tr><td>${esc(fmtDate(a.at))}</td><td>${esc(a.action)}</td><td>${esc(a.idText)}</td><td>${esc(a.details)}</td></tr>`).join('');$('audit-empty').classList.toggle('hidden',state.audit.length>0)}function exportAuditCsv(){if(!state.audit.length){toast('No audit history to export.','error');return}const csv=['Date / Time,Action,ID,Details',...state.audit.map(a=>[fmtDate(a.at),a.action,a.idText,a.details].map(csvEscape).join(','))].join('\n');download('Documentation_Reference_Audit.csv',csv,'text/csv');toast('Audit CSV exported.','success')}function clearAudit(){if(!confirm('Clear audit trail?'))return;snapshot();state.audit=[];save();renderAudit();toast('Audit trail cleared.','success')}function clearAllData(){if(!confirm('This will delete all local references, configuration and audit history. Continue?'))return;snapshot();state.records=[];state.audit=[];state.columns=structuredClone(DEFAULT_COLUMNS);state.values={scope:[{v:'Sales',active:true},{v:'CPQ',active:true},{v:'Service',active:true}],object:[{v:'Opportunity',active:true},{v:'Quote',active:true},{v:'Account',active:true}],configuration:[{v:'Page Layout',active:true},{v:'Approval Rule',active:true},{v:'Workflow',active:true}]};state.visible=DEFAULT_COLUMNS.map(c=>c.key);state.views=[];state.showFavourites=false;save();renderAll();toast('All local data cleared.','success')}function toast(msg,type='success'){const t=$('toast');t.textContent=msg;t.className='toast show '+type;clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.className='toast',2600)}
+window.addEventListener('DOMContentLoaded',init);window.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+</script>
+</body>
+</html>
